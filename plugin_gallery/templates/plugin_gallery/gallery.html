@@ -1,0 +1,42 @@
+{% load sekizai_tags %}
+{% load thumbnail %}
+
+
+<ul id="gallery_{{object.pk}}" class="small-block-grid-1 medium-block-grid-3 large-block-grid-4 gallery-images" >
+  {% for img in images %}
+    <li>
+      <a class="image-link" data-index="{{forloop.counter0}}" href="{{img.image.url}}" data-id="{{img.id}}" data-dialog>
+        <img src='{% thumbnail img.image 150x120 crop upscale %}' width="150" height="120" alt="{{img.name|default:''}}" >
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+
+<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+    <div class="slides"></div>
+    <h3 class="title"></h3>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+</div>
+
+
+{% addtoblock "js" %}
+  <script type="text/javascript" src="{{STATIC_URL}}vendor/blueimp-gallery/js/blueimp-gallery.min.js"></script>
+  <script type="text/javascript">
+    $("a.image-link").click(function(e){
+        options = {
+          index: $(this).data('index'),
+          event: e
+        }
+        blueimp.Gallery($('a.image-link'), options);
+        e.preventDefault();
+      });
+  </script>
+{% endaddtoblock %}
+
+{% addtoblock "css" %}
+  <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}vendor/blueimp-gallery/css/blueimp-gallery.min.css">
+{% endaddtoblock %}

@@ -1,0 +1,6 @@
+include LICENSE
+include README.rst
+recursive-include plugin_gallery/static *
+recursive-include plugin_gallery/templates *
+recursive-include plugin_gallery/migrates *
+recursive-include docs *
